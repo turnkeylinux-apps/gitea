@@ -1,0 +1,7 @@
+#include <turnkey/base>
+
+mariadb-server
+webmin-mysql
+nginx
+
+dirmngr # for gpg

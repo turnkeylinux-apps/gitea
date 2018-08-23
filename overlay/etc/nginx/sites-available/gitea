@@ -1,0 +1,15 @@
+upstream gitea {
+    server unix:/home/git/run/gitea.sock fail_timeout=0;
+}
+
+server {
+    listen 0.0.0.0:80;
+    include /etc/nginx/include/gitea-proxy;
+}
+
+server {
+    listen 0.0.0.0:443 ssl;
+    include /etc/nginx/include/ssl;
+    include /etc/nginx/include/gitea-proxy;
+}
+
