@@ -79,7 +79,9 @@ def main():
 
     config = "/etc/gitea/app.ini"
     system("su git -c 'cd /home/git && ./gitea admin change-password -u gitea -p %s'" % password)
-    system('sed -i "s|\(DOMAIN =\).*|\1 %s|" %s' % (domain, config))
+    system('sed -i "\|DOMAIN|s|=.*|= %s|" %s' % (domain, config))
+    system('sed -i "\|ROOT_URL|s|=.*|= https://%s/|" %s' % (domain, config))
+    system('sed -i "\|FROM|s|=.*|= %s|" %s' % (email, config))
 
     m = MySQL()
     m.execute('UPDATE gitea.user SET email=\"%s\" WHERE id=%i;' % (email, 1))
