@@ -1,5 +1,5 @@
 #!/bin/bash -e
-# set gitlab admin password, email and domain to serve
+# set gitea admin password, email and domain to serve
 
 . /etc/default/inithooks
 
