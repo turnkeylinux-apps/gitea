@@ -1,5 +1,5 @@
 Gitea - Git with a cup of tea!
-===================================
+==============================
 
 `Gitea`_ is a painless self-hosted Git service. It is similar to GitHub,
 Bitbucket and Gitlab. Gitea is a fork of Gogs, a lightweight code
@@ -10,7 +10,13 @@ and on top of that:
 
 - Gitea configurations:
    
-   - Gitea installed from latest upstream.
+   - Gitea binary installed from latest upstream to /home/git/gitea.
+
+     **Security note**: Updates to Gitea may require supervision so
+     they **ARE NOT** configured to install automatically. See the
+     "Updating to a new version" section in the `Gitea documentation`_
+     for upgrade instructions.
+
    - Set Gitea admin password and email on firstboot (convenience,
      security).
    - Set Gitea domain to serve on first boot (convenience).
@@ -29,4 +35,5 @@ Credentials *(passwords set at first boot)*
 -  Gitea: username is **gitea**, password is set at first boot
 
 .. _Gitea: https://gitea.io
+.. _Gitea documentation: https://docs.gitea.io/en-us/install-from-binary/
 .. _TurnKey Core: https://www.turnkeylinux.org/core
