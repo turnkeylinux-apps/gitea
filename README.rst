@@ -1,9 +1,11 @@
 Gitea - Git with a cup of tea!
 ==============================
 
-`Gitea`_ is a painless self-hosted Git service. It is similar to GitHub,
-Bitbucket and Gitlab. Gitea is a fork of Gogs, a lightweight code
-hosting solution written in Go and published under the MIT license.
+`Gitea`_ is a painless self-hosted Git service. It is somewhat similar
+to GitHub, Bitbucket and Gitlab. As well as support for Git revision
+control, it also provides issue tracking and development wiki pages.
+Gitea is a fork of Gogs, a lightweight code hosting solution written
+in Go and published under the MIT license.
 
 This appliance includes all the standard features in `TurnKey Core`_,
 and on top of that:
