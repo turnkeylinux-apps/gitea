@@ -1,3 +1,10 @@
+turnkey-gitea-15.2 (1) turnkey; urgency=low
+
+  * Rebuild to resolve inadvertant removal of mariadb during sec-updates
+    - part of #1246. 
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Wed, 21 Nov 2018 18:16:25 +1100
+
 turnkey-gitea-15.1 (1) turnkey; urgency=low
 
   * Update Gitea to latest upstream (1.5.1).
