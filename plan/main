@@ -1,6 +1,6 @@
 #include <turnkey/base>
 
-mariadb-server
+default-mysql-server
 webmin-mysql
 nginx
 
