@@ -1,4 +1,5 @@
 #include <turnkey/base>
+#include <turnkey/mysql>
 
 default-mysql-server
 webmin-mysql
