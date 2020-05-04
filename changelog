@@ -10,8 +10,7 @@ turnkey-gitea-16.0 (1) turnkey; urgency=low
     recommended for almost all systems"). As provided by Mozilla via
     https://ssl-config.mozilla.org/.
 
-  * Updated all relevant Debian packages to Buster/10 versions; including
-    PHP 7.3.
+  * Updated all relevant Debian packages to Buster/10 versions.
 
   * Updated version of mysqltuner script - now installed as per upstream
     recommendation.
