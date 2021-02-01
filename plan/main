@@ -4,5 +4,6 @@
 default-mysql-server
 webmin-mysql
 nginx
+python3-docutils
 
 dirmngr # for gpg
