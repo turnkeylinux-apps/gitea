@@ -1,13 +1,13 @@
 turnkey-gitea-16.1 (1) turnkey; urgency=low
 
-  * Update Gitea to latest upstream (1.13.1).
+  * Update Gitea to latest upstream: 1.13.1.
 
   * Add RST rendering support..
 
   * Note: Please refer to turnkey-core's 16.1 changelog for changes common to all
     appliances. Here we only describe changes specific to this appliance.
 
- -- root <root@tkldev>  Mon, 01 Feb 2021 23:54:51 +0000
+ -- Stefan Davis <stefan@turnkeylinux.org>  Mon, 01 Feb 2021 23:54:51 +0000
 
 turnkey-gitea-16.0 (1) turnkey; urgency=low
 
