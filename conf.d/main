@@ -48,7 +48,7 @@ service mysql start
 mkdir /home/git/run
 chown -R git:git /home/git
 export USER=git HOME=/home/git GITEA_WORK_DIR=/home/git
-su git -c '/home/git/gitea web -c /etc/gitea/app.ini' &
+runuser git -c '/home/git/gitea web -c /etc/gitea/app.ini' &
 WEBPID=$!
 
 sleep 5 # wait for server to spin up
