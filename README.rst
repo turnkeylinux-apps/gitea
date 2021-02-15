@@ -34,7 +34,7 @@ Credentials *(passwords set at first boot)*
 -------------------------------------------
 
 -  Webmin, SSH, MySQL: username **root**
--  Gitea: username **gitea**
+-  Gitea: username **gitea** (or email entered at firstboot)
 
 .. _Gitea: https://gitea.io
 .. _Gitea documentation: https://docs.gitea.io/en-us/install-from-binary/
