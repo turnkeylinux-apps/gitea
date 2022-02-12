@@ -1,3 +1,13 @@
+turnkey-gitea-17.0 (1) turnkey; urgency=low
+
+  * Update Gitea to latest upstream: 1.16.1.
+
+  * Note: Please refer to turnkey-core's 17.0 changelog for changes common to all
+    appliances. Here we only describe changes specific to this appliance.
+
+ -- Zhenya Hvorostian <zhenya@turnkeylinux.org>  Sun, 13 Feb 2022 01:04:30 +0300
+
+
 turnkey-gitea-16.1 (1) turnkey; urgency=low
 
   * Update Gitea to latest upstream: 1.13.1.
