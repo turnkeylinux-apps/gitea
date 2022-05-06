@@ -11,10 +11,10 @@ Option:
 import os
 import sys
 import getopt
-import inithooks_cache
+from libinithooks import inithooks_cache
 from mysqlconf import MySQL
 
-from dialog_wrapper import Dialog
+from libinithooks.dialog_wrapper import Dialog
 import subprocess
 
 def usage(s=None):
@@ -79,7 +79,7 @@ def main():
     inithooks_cache.write('APP_DOMAIN', domain)
 
     config = "/etc/gitea/app.ini"
-    subprocess.run(["su", "git", "-c", "cd /home/git && ./gitea admin change-password -u gitea -p %s" % password])
+    subprocess.run(["su", "git", "-c", "cd /home/git && ./gitea admin user change-password -u gitea -p %s" % password])
     subprocess.run(['sed', '-i', "\|DOMAIN|s|=.*|= %s|" % domain, config])
     subprocess.run(['sed', '-i', "\|ROOT_URL|s|=.*|= https://%s/|" % domain, config])
     subprocess.run(['sed', '-i', "\|FROM|s|=.*|= %s|" % email, config])
