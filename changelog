@@ -1,3 +1,13 @@
+turnkey-gitea-17.1 (1) turnkey; urgency=low
+
+  * Updated all Debian packages to latest.
+    [ autopatched by buildtasks ]
+
+  * Patched bugfix release. Closes #1734.
+    [ autopatched by buildtasks ]
+
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Wed, 14 Sep 2022 06:49:03 +0000
+
 turnkey-gitea-17.0 (1) turnkey; urgency=low
 
   * Update Gitea to latest upstream: 1.16.1.
