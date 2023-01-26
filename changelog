@@ -1,3 +1,13 @@
+turnkey-gitea-17.2 (1) turnkey; urgency=low
+
+  * Auto installs the latest version of gitea. 
+
+  * Enabling IPv6 listening + Allowing receiving of large http requests.
+    Code changes noted in appliance github by user SamSirry. 
+    [https://github.com/turnkeylinux-apps/gitea/pull/7]
+
+ -- Mattie Darden <mattie@turnkeylinux.org>  Sun, 22 Jan 2023 19:32:51 +0000
+
 turnkey-gitea-17.1 (1) turnkey; urgency=low
 
   * Updated all Debian packages to latest.
