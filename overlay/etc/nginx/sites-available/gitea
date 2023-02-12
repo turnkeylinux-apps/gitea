@@ -9,7 +9,7 @@ server {
 }
 
 server {
-	listen [::]:443;
+	listen [::]:443 ssl;
 	listen 0.0.0.0:443 ssl;
 	include /etc/nginx/snippets/ssl.conf;
 	include /etc/nginx/include/gitea-proxy;
