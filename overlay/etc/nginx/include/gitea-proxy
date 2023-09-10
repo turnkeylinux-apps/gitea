@@ -4,6 +4,11 @@ access_log /var/log/nginx/gitea.access.log;
 error_log /var/log/nginx/gitea.error.log;
 
 location / {
+	# `client_max_body_size` directive does not work for named locations
+	# in some versions of nginx, so workaround by specifying here.
+	# See <https://trac.nginx.org/nginx/ticket/2322>.
+	client_max_body_size 0;
+
 	# serve static files from defined root folder;.
 	try_files $uri $uri/index.html $uri.html @gitea;
 }
