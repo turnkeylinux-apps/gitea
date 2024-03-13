@@ -1,12 +1,15 @@
 turnkey-gitea-18.0 (1) turnkey; urgency=low
 
-  * Install latest upstream version of Gitea: 1.20.6 (as of today,
-    automatically searches for, and install latest revision).
+  * Install latest upstream version of Gitea: v1.21.8.
+
+  * As of v1.19 includes CI/CD - closes #1877.
 
   * Fix Gitea appliance inithook - note correct username 'gitea' (not 'admin')
     - closes #1808
 
   * Update Gitea 'PROTOCOL' to 'http+unix' - closes #1807.
+
+  * DEV: automatically search for, and install latest version of Gitea.
 
   * Special thanks to Daniele Lolli aka UncleDan <github@uncledan.it> for
     work on this (and many other) v18.0 app updates.
