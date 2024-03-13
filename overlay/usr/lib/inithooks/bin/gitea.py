@@ -50,7 +50,7 @@ def main():
         d = Dialog('TurnKey Linux - First boot configuration')
         password = d.get_password(
             "Gitea Password",
-            "Enter new password for the Gitea 'admin' account.",
+            "Enter new password for the Gitea admin 'gitea' account.",
             pass_req = 8, min_complexity=4)
 
     if not email:
@@ -59,7 +59,7 @@ def main():
 
         email = d.get_email(
             "Gitea Email",
-            "Enter email address for the Gitea 'admin' account.",
+            "Enter email address for the Gitea admin 'gitea' account.",
             "admin@example.com")
 
     inithooks_cache.write('APP_EMAIL', email)
