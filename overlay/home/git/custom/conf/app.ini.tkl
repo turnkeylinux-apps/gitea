@@ -1,0 +1,27 @@
+APP_NAME = TurnKey Gitea
+RUN_USER = git
+
+[database]
+NAME = gitea
+USER = gitea
+PASSWD = turnkey
+LOG_SQL = false
+
+[server]
+DOMAIN = www.example.org
+PROTOCOL = http+unix
+HTTP_ADDR = /home/git/run/gitea.sock
+UNIX_SOCKET_PERMISSION = 666
+
+[markup.restructuredtext]
+ENABLED = true
+FILE_EXTENSIONS = .rst
+RENDER_COMMAND = rst2html
+IS_INPUT_FILE = false
+
+[mailer]
+ENABLED = true
+FROM    = admin@example.com
+MAILER_TYPE = sendmail
+SENDMAIL_PATH = /usr/sbin/sendmail
+SENDMAIL_TIMEOUT = 5m
