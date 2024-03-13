@@ -7,7 +7,9 @@ dl() {
 
 SRC=/usr/local/src
 GH_API=https://api.github.com/repos/go-gitea/gitea/releases/latest
-LATEST=$(curl -s $GH_API | grep -oP '"tag_name": "\K(.*)(?=")')
+
+LATEST=$(gh_releases go-gitea/gitea \
+            | sort -V | grep -v dev | grep -v rc | tail -1)
 GITEA_VERSION=${LATEST#v}
 FILENAME="gitea-${GITEA_VERSION}-linux-amd64"
 
