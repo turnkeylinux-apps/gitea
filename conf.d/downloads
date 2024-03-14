@@ -1,0 +1,25 @@
+#!/bin/bash -ex
+
+dl() {
+    [ "$FAB_HTTP_PROXY" ] && PROXY="--proxy $FAB_HTTP_PROXY"
+    cd $2; curl -L -f -O $PROXY $1; cd -
+}
+
+SRC=/usr/local/src
+GH_API=https://api.github.com/repos/go-gitea/gitea/releases/latest
+
+LATEST=$(gh_releases go-gitea/gitea \
+            | sort -V | grep -v dev | grep -v rc | tail -1)
+GITEA_VERSION=${LATEST#v}
+FILENAME="gitea-${GITEA_VERSION}-linux-amd64"
+
+URL1="https://dl.gitea.io/gitea/${GITEA_VERSION}/${FILENAME}"
+URL2="https://dl.gitea.io/gitea/${GITEA_VERSION}/${FILENAME}.asc"
+
+dl $URL1 $SRC
+dl $URL2 $SRC
+
+gpg --keyserver keyserver.ubuntu.com --recv 0x2D9AE806EC1592E2
+gpg --verify "${FILENAME}.asc" "${FILENAME}"
+
+rm "$SRC/${FILENAME}.asc"

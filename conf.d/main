@@ -1,41 +1,24 @@
 #!/bin/bash -ex
 
-GH_API=https://api.github.com/repos/go-gitea/gitea/releases/latest
-LATEST=$(curl -s $GH_API | grep -oP '"tag_name": "\K(.*)(?=")')
-GITEA_VERSION=${LATEST#v}
 ADMIN_PASS=turnkey
 ADMIN_EMAIL=admin@example.org
-
-APP_DOMAIN=www.example.com
-
-SRC=/usr/local/src
-
 DB_NAME=gitea
 DB_USER=gitea
 DB_PASS=turnkey1
 
+SRC=/usr/local/src
+APP_DOMAIN=www.example.com
+
 useradd -M git
 service mysql start
 
-MYSQL_BATCH="mysql --user=root --password=$MYSQL_PASS --batch"
-MYSQL_ADMIN="mysqladmin --user=root --password=$MYSQL_PASS"
+MYSQL_BATCH="mysql --batch"
 
 # create database and user
-$MYSQL_ADMIN create "${DB_NAME}" --default-character-set=utf8
+mysqladmin create "${DB_NAME}"
 $MYSQL_BATCH --execute "grant all privileges on ${DB_NAME}.* to '${DB_USER}'@localhost identified by '${DB_PASS}'; alter database ${DB_NAME} character set = utf8 collate = utf8_general_ci;"
 
-[ "$FAB_HTTP_PROXY" ] && export HTTP_PROXY=$FAB_HTTP_PROXY
-
-cd "$SRC"
-
-FILENAME="gitea-${GITEA_VERSION}-linux-amd64"
-wget "https://dl.gitea.io/gitea/${GITEA_VERSION}/${FILENAME}" "https://dl.gitea.io/gitea/${GITEA_VERSION}/${FILENAME}.asc"
-gpg --keyserver keyserver.ubuntu.com --recv 0x2D9AE806EC1592E2
-unset HTTP_PROXY
-
-gpg --verify "${FILENAME}.asc" "${FILENAME}"
-rm "${FILENAME}.asc"
-mv "${FILENAME}" /home/git/gitea
+mv "$SRC/gitea-*-linux-amd64" /home/git/gitea
 
 chmod +x /home/git/gitea
 
@@ -64,4 +47,3 @@ systemctl enable gitea
 systemctl enable nginx
 
 chown -R git:root /etc/gitea
-
