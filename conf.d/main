@@ -18,19 +18,18 @@ MYSQL_BATCH="mysql --batch"
 mysqladmin create "${DB_NAME}"
 $MYSQL_BATCH --execute "grant all privileges on ${DB_NAME}.* to '${DB_USER}'@localhost identified by '${DB_PASS}'; alter database ${DB_NAME} character set = utf8 collate = utf8_general_ci;"
 
-mv "$SRC/gitea-*-linux-amd64" /home/git/gitea
-
-chmod +x /home/git/gitea
-
 rm -f /etc/nginx/sites-enabled/default
 ln -s /etc/nginx/sites-available/gitea /etc/nginx/sites-enabled/gitea
+
+export USER=git HOME=/home/git GITEA_WORK_DIR=/home/git
+mv $SRC/gitea-*-linux-amd64 $HOME/gitea
+chmod +x /home/git/gitea
+mkdir $HOME/run
+chown -R git:git /home/git
 
 service nginx start
 service mysql start
 
-mkdir /home/git/run
-chown -R git:git /home/git
-export USER=git HOME=/home/git GITEA_WORK_DIR=/home/git
 runuser git -c '/home/git/gitea web -c /etc/gitea/app.ini' &
 WEBPID=$!
 

@@ -20,6 +20,6 @@ dl $URL1 $SRC
 dl $URL2 $SRC
 
 gpg --keyserver keyserver.ubuntu.com --recv 0x2D9AE806EC1592E2
-gpg --verify "${FILENAME}.asc" "${FILENAME}"
+gpg --verify "$SRC/${FILENAME}.asc" "$SRC/${FILENAME}"
 
 rm "$SRC/${FILENAME}.asc"
