@@ -81,8 +81,9 @@ def main():
     config = "/etc/gitea/app.ini"
     subprocess.run(["su", "git", "-c", "cd /home/git && ./gitea admin user change-password -u gitea -p %s" % password])
     subprocess.run(['sed', '-i', "\|DOMAIN|s|=.*|= %s|" % domain, config])
-    subprocess.run(['sed', '-i', "\|ROOT_URL|s|=.*|= https://%s/|" % domain, config])
+    subprocess.run(['sed', '-i', "\|ROOT_URL|s|=.*|= https+unix://%s:3000/|" % domain, config])
     subprocess.run(['sed', '-i', "\|FROM|s|=.*|= %s|" % email, config])
+    subprocess.run(['sed', '-i', "\|NO_REPLY_ADDRESS|s|=.*|= noreply@%s|" % domain, config])
 
     m = MySQL()
     m.execute("UPDATE gitea.user SET email='%s' WHERE id=1;" % (email,))
