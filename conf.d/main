@@ -25,6 +25,8 @@ export USER=git HOME=/home/git GITEA_WORK_DIR=/home/git
 mv $SRC/gitea-*-linux-amd64 $HOME/gitea
 chmod +x /home/git/gitea
 mkdir $HOME/run
+mkdir -p $HOME/custom/conf
+mv $SRC/app.example.ini $HOME/custom/conf/
 chown -R git:git /home/git
 
 service nginx start
