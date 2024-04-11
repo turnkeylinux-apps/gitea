@@ -15,11 +15,14 @@ FILENAME="gitea-${GITEA_VERSION}-linux-amd64"
 
 URL1="https://dl.gitea.io/gitea/${GITEA_VERSION}/${FILENAME}"
 URL2="https://dl.gitea.io/gitea/${GITEA_VERSION}/${FILENAME}.asc"
+URL3="https://raw.githubusercontent.com/go-gitea/gitea/${LATEST}/custom/conf/app.example.ini"
 
 dl $URL1 $SRC
 dl $URL2 $SRC
+dl $URL3 $SRC
 
-gpg --keyserver keyserver.ubuntu.com --recv 0x2D9AE806EC1592E2
-gpg --verify "${FILENAME}.asc" "${FILENAME}"
+gpg --import $SRC/gitea-key.asc
+#gpg --keyserver keyserver.ubuntu.com --recv 0x2D9AE806EC1592E2
+gpg --verify "$SRC/${FILENAME}.asc" "$SRC/${FILENAME}"
 
-rm "$SRC/${FILENAME}.asc"
+rm "$SRC/${FILENAME}.asc" "$SRC/gitea-key.asc"

@@ -1,5 +1,6 @@
 #!/bin/bash -ex
 
+ADMIN_USER=gitea
 ADMIN_PASS=turnkey
 ADMIN_EMAIL=admin@example.org
 DB_NAME=gitea
@@ -18,27 +19,33 @@ MYSQL_BATCH="mysql --batch"
 mysqladmin create "${DB_NAME}"
 $MYSQL_BATCH --execute "grant all privileges on ${DB_NAME}.* to '${DB_USER}'@localhost identified by '${DB_PASS}'; alter database ${DB_NAME} character set = utf8 collate = utf8_general_ci;"
 
-mv "$SRC/gitea-*-linux-amd64" /home/git/gitea
-
-chmod +x /home/git/gitea
-
 rm -f /etc/nginx/sites-enabled/default
 ln -s /etc/nginx/sites-available/gitea /etc/nginx/sites-enabled/gitea
+
+export USER=git HOME=/home/git GITEA_WORK_DIR=/home/git
+mv $SRC/gitea-*-linux-amd64 $HOME/gitea
+chmod +x /home/git/gitea
+mkdir $HOME/run
+mkdir -p $HOME/custom/conf
+mv $SRC/app.example.ini $HOME/custom/conf/
+chown -R git:git /home/git
 
 service nginx start
 service mysql start
 
-mkdir /home/git/run
-chown -R git:git /home/git
-export USER=git HOME=/home/git GITEA_WORK_DIR=/home/git
-runuser git -c '/home/git/gitea web -c /etc/gitea/app.ini' &
-WEBPID=$!
+runuser - git -c 'GITEA__security__INSTALL_LOCK=true ./gitea web --pid $HOME/tmp.pid' 2>&1 >/root/gitea-start.log &
 
-sleep 5 # wait for server to spin up
+echo "Waiting for gitea to tnstall and web server to start"
+while ! grep -q 'Starting new Web server: unix:/home/git/run/gitea.sock' /root/gitea-start.log; do
+    sleep 10
+done
 
-curl -fks 'https://localhost/' --data "db_type=mysql&db_host=127.0.0.1%3A3306&db_user=${DB_USER}&db_passwd=${DB_PASS}&db_name=${DB_NAME}&ssl_mode=disable&charset=utf8&db_path=data%2Fgitea.db&app_name=TurnKey+Gitea&repo_root_path=%2Fhome%2Fgit%2Fgitea-repositories&lfs_root_path=%2Fhome%2Fgit%2Fdata%2Flfs&run_user=git&domain=${APP_DOMAIN}&ssh_port=22&http_port=80&app_url=https%3A%2F%2F${APP_DOMAIN}%2F&log_root_path=%2Fhome%2Fgit%2Flog&smtp_host=localhost&smtp_from=${ADMIN_EMAIL}&smtp_user=&smtp_passwd=&enable_federated_avatar=on&enable_open_id_sign_in=on&enable_open_id_sign_up=on&default_allow_create_organization=on&default_enable_timetracking=on&no_reply_address=noreply.example.org&admin_name=gitea&admin_passwd=${ADMIN_PASS}&admin_confirm_passwd=${ADMIN_PASS}&admin_email=${ADMIN_EMAIL}"
+rm /root/gitea-start.log
 
-kill ${WEBPID}
+runuser - git -c "./gitea admin user create --admin --username $ADMIN_USER --password $ADMIN_PASS --email $ADMIN_EMAIL"
+
+kill $(cat $HOME/tmp.pid)
+rm $HOME/tmp.pid
 
 service nginx stop
 service mysql stop

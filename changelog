@@ -1,6 +1,6 @@
 turnkey-gitea-18.0 (1) turnkey; urgency=low
 
-  * Install latest upstream version of Gitea: v1.21.8.
+  * Install latest upstream version of Gitea: v1.21.10.
 
   * As of v1.19 includes CI/CD - closes #1877.
 
@@ -85,7 +85,7 @@ turnkey-gitea-18.0 (1) turnkey; urgency=low
 
   * Use MariaDB (MySQL replacement) v10.11.3 (from debian repos).
 
- -- Jeremy Davis <jeremy@turnkeylinux.org>  Wed, 13 Mar 2024 21:56:02 +0000
+ -- Jeremy Davis <jeremy@turnkeylinux.org>  Tue, 09 Apr 2024 03:10:32 +0000
 
 turnkey-gitea-17.2 (1) turnkey; urgency=low
 
