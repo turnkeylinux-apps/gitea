@@ -81,7 +81,15 @@ def main():
     config = "/etc/gitea/app.ini"
     password = password.replace('\\', '\\\\').replace('\'', '\\\'')
 
-    subprocess.run(["su", "git", "-c", "cd /home/git && ./gitea admin user change-password --must-change-password=false -u gitea -p '%s'" % password])
+    subprocess.run([
+            "./gitea", "admin",
+            "user", "change-password",
+            "--must-change-password=false",
+            "-u", "gitea", "-p", password
+        ],
+        user='git',
+        group='git',
+        cwd='/home/git')
     subprocess.run(['sed', '-i', "\|DOMAIN|s|=.*|= %s|" % domain, config])
     subprocess.run(['sed', '-i', "\|ROOT_URL|s|=.*|= https+unix://%s:3000/|" % domain, config])
     subprocess.run(['sed', '-i', "\|FROM|s|=.*|= %s|" % email, config])
