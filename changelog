@@ -1,6 +1,6 @@
 turnkey-gitea-18.1 (1) turnkey; urgency=low
 
-  * Install latest upstream version of Gitea: v1.??.??.
+  * Install latest upstream version of Gitea: v1.25.1.
 
   * Test against TurnKey Linux 18.1
 
