@@ -1,3 +1,11 @@
+turnkey-gitea-19.0 (1) turnkey; urgency=low
+
+  * Install latest upstream version of Gitea: v1.26.4.
+
+  * Add emoji support - closes #1954
+
+ -- Stefan Davis <nafets.sivad@gmail.com>  Tue, 30 Jun 2026 04:32:33 +0000
+
 turnkey-gitea-18.0 (1) turnkey; urgency=low
 
   * Install latest upstream version of Gitea: v1.21.10.
