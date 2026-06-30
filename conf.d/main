@@ -8,7 +8,6 @@ DB_USER=gitea
 DB_PASS=turnkey1
 
 SRC=/usr/local/src
-APP_DOMAIN=www.example.com
 
 useradd -M git
 service mysql start
@@ -44,8 +43,8 @@ rm /root/gitea-start.log
 
 runuser - git -c "./gitea admin user create --admin --username $ADMIN_USER --password $ADMIN_PASS --email $ADMIN_EMAIL"
 
-kill $(cat $HOME/tmp.pid)
-rm $HOME/tmp.pid
+kill "$(cat $HOME/tmp.pid)"
+rm "$HOME/tmp.pid"
 
 service nginx stop
 service mysql stop
