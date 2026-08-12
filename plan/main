@@ -7,3 +7,5 @@ nginx
 python3-docutils
 
 dirmngr # for gpg
+
+fonts-noto-color-emoji
