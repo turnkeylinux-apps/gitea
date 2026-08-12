@@ -33,10 +33,11 @@ and on top of that:
 Gitea Actions - CI/CD "Act" runners
 -----------------------------------
 
-As of TurnKey Gitea v18.0, `Gitea Actions`_ are supported and enabled
-by default. Pre-built `Act runner`_ binaries can be downloaded from Gitea.
-Builds on the Gitea host is supported but discouraged, unless using
-Docker (which requires additional install).
+`Gitea Actions`_ (similar functionality to GitHub Actions) are supported and
+enabled on TurnKey Gitea appliance by default. Pre-built `Act runner`_ binaries
+can be downloaded from Gitea. Builds on the Gitea host itself is supported but
+discouraged, unless via Docker/Podman - which requires additional install and
+configuration.
 
 For further info, please read the `Gitea Actions`_ docs. Please see the
 `act_runner Readme`_ for links to examples.
