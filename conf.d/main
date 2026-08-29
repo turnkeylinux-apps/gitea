@@ -54,4 +54,15 @@ service mysql stop
 systemctl enable gitea
 systemctl enable nginx
 
-chown -R git:root /etc/gitea
+# Keep the service binary, templates and configuration outside the Gitea
+# process write boundary. Repositories, runtime data, logs and SSH keys remain
+# writable by the service account.
+chown -R root:root /home/git
+for runtime_dir in data log run .ssh; do
+    install -d -o git -g git -m 0750 "/home/git/$runtime_dir"
+    chown -R git:git "/home/git/$runtime_dir"
+done
+chmod 0755 /home/git/gitea
+chown -R root:git /etc/gitea
+find /etc/gitea -type d -exec chmod 0750 {} +
+find /etc/gitea -type f -exec chmod 0640 {} +
