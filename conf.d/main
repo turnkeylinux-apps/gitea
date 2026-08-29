@@ -1,5 +1,7 @@
 #!/bin/bash -ex
 
+. /usr/local/src/tkl-bashlib/init.sh
+
 ADMIN_USER=gitea
 ADMIN_PASS=turnkey
 ADMIN_EMAIL=admin@example.org
@@ -34,10 +36,10 @@ service mysql start
 
 runuser - git -c 'GITEA__security__INSTALL_LOCK=true ./gitea web --pid $HOME/tmp.pid' 2>&1 >/root/gitea-start.log &
 
-echo "Waiting for gitea to tnstall and web server to start"
-while ! grep -q 'Starting new Web server: unix:/home/git/run/gitea.sock' /root/gitea-start.log; do
-    sleep 10
-done
+echo "Waiting for Gitea to install and start"
+wait_until_ok \
+    "grep -q 'Starting new Web server: unix:/home/git/run/gitea.sock' /root/gitea-start.log" \
+    2 60
 
 rm /root/gitea-start.log
 
