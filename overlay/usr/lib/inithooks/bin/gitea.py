@@ -16,6 +16,8 @@ import getopt
 import json
 import secrets
 import ssl
+import time
+import urllib.error
 import urllib.request
 from libinithooks import inithooks_cache
 from mysqlconf import MySQL
@@ -131,10 +133,22 @@ def main():
                 "Content-Type": "application/json",
             },
         )
-        with urllib.request.urlopen(
-                request, context=ssl._create_unverified_context()) as response:
-            if response.status != 200:
-                raise RuntimeError(f"Gitea user update returned {response.status}")
+        for attempt in range(30):
+            try:
+                with urllib.request.urlopen(
+                        request,
+                        context=ssl._create_unverified_context()) as response:
+                    if response.status != 200:
+                        raise RuntimeError(
+                            f"Gitea user update returned {response.status}")
+                    break
+            except urllib.error.HTTPError as error:
+                if error.code not in (502, 503) or attempt == 29:
+                    raise
+            except urllib.error.URLError:
+                if attempt == 29:
+                    raise
+            time.sleep(1)
     finally:
         m.execute("DELETE FROM gitea.access_token WHERE name=%s;", (token_name,))
 
