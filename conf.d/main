@@ -38,7 +38,7 @@ runuser - git -c 'GITEA__security__INSTALL_LOCK=true ./gitea web --pid $HOME/tmp
 
 echo "Waiting for Gitea to install and start"
 wait_until_ok \
-    "grep -q 'Starting new Web server: unix:/home/git/run/gitea.sock' /root/gitea-start.log" \
+    "test -S /home/git/run/gitea.sock" \
     2 60
 
 rm /root/gitea-start.log
