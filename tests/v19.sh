@@ -36,8 +36,15 @@ runuser -u git -- touch /home/git/data/.tkl-v19-write-test
 runuser -u git -- rm /home/git/data/.tkl-v19-write-test
 
 systemctl restart mariadb.service gitea.service nginx.service
-curl "${curl_args[@]}" --netrc-file "$work/netrc" \
-    "$base/api/v1/repos/gitea/qa-v19" >"$work/repo-after-restart.json"
+for attempt in $(seq 1 30); do
+    if curl "${curl_args[@]}" --netrc-file "$work/netrc" \
+            "$base/api/v1/repos/gitea/qa-v19" \
+            >"$work/repo-after-restart.json"; then
+        break
+    fi
+    test "$attempt" -lt 30
+    sleep 1
+done
 grep -Fq 'qa-v19' "$work/repo-after-restart.json"
 curl "${curl_args[@]}" --netrc-file "$work/netrc" -X DELETE \
     "$base/api/v1/repos/gitea/qa-v19"
