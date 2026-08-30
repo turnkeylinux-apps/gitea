@@ -39,9 +39,16 @@ for secret_name in INTERNAL_TOKEN JWT_SECRET LFS_JWT_SECRET SECRET_KEY; do
     secret_value=$(sed -n \
         "s/^[[:space:]]*${secret_name}[[:space:]]*=[[:space:]]*//p" \
         /etc/gitea/app.ini | tail -n1)
-    test -n "$secret_value"
-    ! grep -R -F -- "$secret_value" /var/log/inithooks.log /var/log/gitea \
-        2>/dev/null
+    if [[ -z $secret_value ]]; then
+        echo "$secret_name is empty after firstboot rotation" >&2
+        exit 1
+    fi
+    leaked_in=$(grep -R -l -F -- "$secret_value" \
+        /var/log/inithooks.log /var/log/gitea 2>/dev/null || true)
+    if [[ -n $leaked_in ]]; then
+        echo "$secret_name was disclosed in: $leaked_in" >&2
+        exit 1
+    fi
 done
 
 systemctl restart mariadb.service gitea.service nginx.service
