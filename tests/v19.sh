@@ -35,6 +35,15 @@ runuser -u git -- test ! -w /etc/gitea/app.ini
 runuser -u git -- touch /home/git/data/.tkl-v19-write-test
 runuser -u git -- rm /home/git/data/.tkl-v19-write-test
 
+for secret_name in INTERNAL_TOKEN JWT_SECRET LFS_JWT_SECRET SECRET_KEY; do
+    secret_value=$(sed -n \
+        "s/^[[:space:]]*${secret_name}[[:space:]]*=[[:space:]]*//p" \
+        /etc/gitea/app.ini | tail -n1)
+    test -n "$secret_value"
+    ! grep -R -F -- "$secret_value" /var/log/inithooks.log /var/log/gitea \
+        2>/dev/null
+done
+
 systemctl restart mariadb.service gitea.service nginx.service
 for attempt in $(seq 1 30); do
     if curl "${curl_args[@]}" --netrc-file "$work/netrc" \
