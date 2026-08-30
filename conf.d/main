@@ -58,10 +58,14 @@ systemctl enable nginx
 # process write boundary. Repositories, runtime data, logs and SSH keys remain
 # writable by the service account.
 chown -R root:root /home/git
-for runtime_dir in data log run .ssh; do
+for runtime_dir in data log .ssh; do
     install -d -o git -g git -m 0750 "/home/git/$runtime_dir"
     chown -R git:git "/home/git/$runtime_dir"
 done
+# Nginx needs directory traversal to Gitea's mode-0666 Unix socket, while
+# Gitea remains the sole owner allowed to create or remove socket entries.
+install -d -o git -g www-data -m 0750 /home/git/run
+chown -R git:www-data /home/git/run
 chmod 0755 /home/git/gitea
 chown -R root:git /etc/gitea
 find /etc/gitea -type d -exec chmod 0750 {} +
